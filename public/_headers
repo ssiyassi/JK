@@ -1,0 +1,7 @@
+# Security headers for static files (images, scripts, styles) that Cloudflare serves directly, before the app's
+# middleware runs. Pages and APIs get the full set from src/middleware.ts.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains

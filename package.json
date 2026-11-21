@@ -1,0 +1,50 @@
+{
+  "name": "jentis-kitchen",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --no-warnings --test tests/core.test.ts tests/shop.test.ts tests/payments.test.ts tests/telegram.test.ts tests/reseller-recap.test.ts tests/costs.test.ts tests/vouchers.test.ts tests/payday.test.ts tests/sandbox.test.ts tests/meta.test.ts tests/places.test.ts tests/collabs.test.ts tests/retry.test.ts tests/checkout-leads.test.ts tests/social-proof.test.ts tests/google-ads.test.ts tests/instagram.test.ts tests/reorder.test.ts tests/affiliates.test.ts tests/bundles.test.ts tests/wa-code.test.ts tests/reseller-stories.test.ts",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy:preview": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env preview",
+    "deploy:production": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:migrate:local": "wrangler d1 migrations apply jentis-db-prod --local",
+    "db:migrate:preview": "wrangler d1 migrations apply jentis-db-preview --remote --env preview",
+    "db:migrate:production": "wrangler d1 migrations apply jentis-db-prod --remote",
+    "db:fingerprint:local": "wrangler d1 execute jentis-db-prod --local --file=scripts/reconcile.sql",
+    "db:fingerprint:preview": "wrangler d1 execute jentis-db-preview --remote --env preview --file=scripts/reconcile.sql",
+    "db:fingerprint:production": "wrangler d1 execute jentis-db-prod --remote --file=scripts/reconcile.sql"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "1.4.0",
+    "@headlessui/react": "^2.2.8",
+    "@heroicons/react": "^2.2.0",
+    "@opennextjs/cloudflare": "1.20.13",
+    "jose": "^5.9.6",
+    "leaflet": "1.9.4",
+    "lucide-react": "^0.544.0",
+    "next": "16.4.6",
+    "qrcode-generator": "1.4.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/leaflet": "1.9.22",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.6",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5",
+    "wrangler": "^4.151.3"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Italianno&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=block');
+
+:root {
+  --brand: #9a3412;
+  --brand-dark: #6b230b;
+  --cream: #fff7ed;
+  --amber: #fbbf24;
+  --ink: #1c1009;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--ink); }
+body { font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+
+.canvas { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
+.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shade-bottom { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,8,3,.55) 0%, rgba(20,8,3,0) 22%, rgba(20,8,3,0) 40%, rgba(20,8,3,.82) 66%, rgba(20,8,3,.96) 100%); }
+
+.brandbar { position: absolute; display: flex; align-items: center; gap: 14px; }
+.brandbar img { height: 92px; filter: invert(1) brightness(2); }
+.brandbar .word { font-family: 'Italianno', cursive; font-size: 64px; line-height: 1; }
+
+.badge { position: absolute; width: 230px; height: 230px; border-radius: 50%; background: var(--amber); color: var(--brand-dark);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transform: rotate(-8deg);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+.badge .small { font-size: 22px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.badge .big { font-family: 'Inter', sans-serif; font-size: 84px; font-weight: 800; line-height: 1; letter-spacing: -.03em; margin: 4px 0 6px; }
+
+.headline { font-family: 'Playfair Display', serif; font-weight: 800; line-height: 1.02; letter-spacing: -.01em; }
+.headline em { font-style: italic; color: var(--amber); }
+.sub { font-size: 32px; line-height: 1.35; font-weight: 500; color: #fde8d6; }
+
+.chips { display: flex; gap: 14px; flex-wrap: wrap; }
+.chip { border: 2px solid rgba(255,255,255,.55); border-radius: 999px; padding: 10px 24px; font-size: 26px; font-weight: 600; }
+
+.cta { display: inline-flex; align-items: center; gap: 14px; background: var(--brand); color: #fff; border-radius: 999px;
+  padding: 22px 40px; font-size: 32px; font-weight: 800; box-shadow: 0 10px 30px rgba(154,52,18,.45); }
+.cta::after { content: '→'; font-weight: 600; }
+
+.fine { font-size: 19px; line-height: 1.4; color: rgba(255,255,255,.7); }

@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id             String         @id @default(cuid())
+  orderId        String         @unique
+  date           DateTime
+  customerName   String
+  reseller       String
+  parentReseller String?
+  address        String
+  phoneNumber    String
+  babiManis      Int
+  babiAsin       Int
+  sapiManis      Int
+  sapiAsin       Int
+  isPaydayPromo  Boolean        @default(false)
+  boxCounter     Int
+  orderStatus    OrderStatus    @default(ACTIVE)
+  paymentStatus  PaymentStatus  @default(PENDING)
+  deliveryStatus DeliveryStatus @default(PENDING)
+  deliveryDate   DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("orders")
+}
+
+model Reseller {
+  id             String   @id @default(cuid())
+  reseller       String
+  parentReseller String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([reseller, parentReseller])
+  @@map("resellers")
+}
+
+model StockMovementHistory {
+  id                 String       @id @default(cuid())
+  date               DateTime
+  type               MovementType
+  babiManisBeginning Int
+  babiAsinBeginning  Int
+  sapiManisBeginning Int
+  sapiAsinBeginning  Int
+  babiManisChanges   Int
+  babiAsinChanges    Int
+  sapiManisChanges   Int
+  sapiAsinChanges    Int
+  babiManisFinal     Int
+  babiAsinFinal      Int
+  sapiManisFinal     Int
+  sapiAsinFinal      Int
+  createdAt          DateTime     @default(now())
+  orderId            String?
+
+  @@map("stock_movement_history")
+}
+
+model CurrentInventory {
+  id        String   @id @default(cuid())
+  babiManis Int
+  babiAsin  Int
+  sapiManis Int
+  sapiAsin  Int
+  updatedAt DateTime @updatedAt
+
+  @@map("current_inventory")
+}
+
+enum OrderStatus {
+  ACTIVE
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+}
+
+enum DeliveryStatus {
+  PENDING
+  DELIVERED
+}
+
+enum MovementType {
+  STOCK_ADJUSTMENT
+  PRODUCTION
+  ORDER
+  CANCEL_ORDER
+  EDIT_ORDER
+}

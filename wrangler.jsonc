@@ -1,0 +1,112 @@
+// Cloudflare Worker configuration for Jentis Kitchen.
+// Replace the three REPLACE_ME values after running the setup commands in DEPLOYMENT.md.
+// None of these values are secrets.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jentis-kitchen",
+  // custom-worker.ts = the OpenNext app (.open-next/worker.js) + the scheduled job below.
+  "main": "custom-worker.ts",
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Every 15 minutes: cancel website orders whose payment expired + Telegram alert for stock below 5.
+  // 12:00 UTC = 19:00 WIB: Telegram summary of tomorrow's deliveries (DAILY_SUMMARY_CRON in src/lib/shop/scheduled.ts).
+  // Sunday 05:00 UTC = Sunday 12:00 WIB: Telegram recap of what to transfer to parent resellers (WEEKLY_RECAP_CRON).
+  "triggers": { "crons": ["* * * * *", "*/15 * * * *", "0 12 * * *", "0 5 * * SUN", "0 1 1 * *"] },
+
+  // ---------------- Production ----------------
+  // No *.workers.dev URL: production is reachable only through the custom domain, behind Cloudflare Access.
+  "workers_dev": false,
+  "preview_urls": false,
+  // admin.jentiskitchen.id = admin (behind Access). jentiskitchen.id = public online shop (see SHOP_HOSTS / middleware).
+  "routes": [
+    { "pattern": "admin.jentiskitchen.id", "custom_domain": true },
+    { "pattern": "jentiskitchen.id", "custom_domain": true },
+    { "pattern": "www.jentiskitchen.id", "custom_domain": true } // redirects to jentiskitchen.id (middleware)
+  ],
+  "vars": {
+    "CF_ACCESS_TEAM_DOMAIN": "green-sun-6a16.cloudflareaccess.com",
+    "CF_ACCESS_AUD": "73aecc9d912a4d500819123d71f88aaf6375db3e8431811bcf0c2c2c9270bee8",
+    // Online shop. Secrets (not in this file), set with `wrangler secret put`: RESEND_API_KEY, OWNER_EMAIL,
+    // DOKU_SECRET_KEY, DUITKU_API_KEY. PAYMENT_GATEWAY picks the gateway for new payments when it is configured
+    // (Duitku also needs DUITKU_MERCHANT_CODE); otherwise the other one is used, and with neither, manual bank transfer.
+    // Telegram bots (secrets too): TELEGRAM_CHAT_ID, TELEGRAM_BOT_TOKEN (Stock Alert) and TELEGRAM_ORDERS_/SHIPPING_/
+    // REPORTING_/CMO_BOT_TOKEN; a bot without its own token uses TELEGRAM_BOT_TOKEN (see src/lib/notify/telegram.ts).
+    "DOKU_ENV": "production",
+    "DOKU_CLIENT_ID": "BRN-0224-1791875009094",
+    "PAYMENT_GATEWAY": "doku",
+    "DUITKU_ENV": "production",
+    // Duitku is used for the OVO option only (QRIS stays on PAYMENT_GATEWAY = DOKU). No secret DUITKU_API_KEY = OVO hidden.
+    "DUITKU_MERCHANT_CODE": "D25443",
+    // Test accounts (Duitku verification team) pay through the Duitku sandbox: no real money. Also needs the secret
+    // DUITKU_SANDBOX_API_KEY. Orders they "pay" show as "Paid via Duitku SANDBOX" in Website Orders — never ship them.
+    "SANDBOX_TEST_EMAILS": "duitku.test@jentiskitchen.id",
+    "DUITKU_SANDBOX_MERCHANT_CODE": "DS36544",
+    "SHOP_HOSTS": "jentiskitchen.id",
+    "SHOP_URL": "https://jentiskitchen.id",
+    "ADMIN_URL": "https://admin.jentiskitchen.id",
+    "EMAIL_FROM": "Jentis Kitchen <order@jentiskitchen.id>",
+    // "on" = required Kota dropdown at checkout; courier cities get soonest send date tomorrow (src/lib/shop/delivery-cities.ts).
+    "NEW_CITY_DELIVERY": "on",
+    // Meta Pixel + Conversions API (ads measurement). Empty = off. The CAPI token is a secret: META_CAPI_TOKEN.
+    "META_PIXEL_ID": "640518473594074",
+    "META_DOMAIN_VERIFICATION": "pnw52026cylvost61rbqgtm32s9xgz",
+    // Ad account read by the daily ad results sync (secret META_ADS_TOKEN, read-only ads_read).
+    "META_AD_ACCOUNT_ID": "act_993257963827130",
+    // Automatic Instagram posts (src/lib/marketing/instagram.ts) for @jentis.kitchen. Needs the secret INSTAGRAM_PUBLISH_TOKEN
+    // (system user Jentis Reports, instagram_content_publish); without it nothing is posted.
+    "INSTAGRAM_USER_ID": "17841401644118096",
+    // Google Ads tag + the "Purchase - jentiskitchen.id" conversion (public). Empty = off. The Google Ads script's key
+    // for the Ads Report is a secret: GOOGLE_ADS_SYNC_SECRET (scripts/save-google-ads-secret.sh).
+    "GOOGLE_ADS_TAG_ID": "AW-18558911891",
+    "GOOGLE_ADS_PURCHASE_LABEL": "XG0kCP73jLMdEJOLypFF",
+    // Microsoft Clarity heatmaps + session recordings on the shop (public id). Empty = off. Checkout, orders, account,
+    // voucher and affiliate pages are fully masked (src/lib/shop/clarity.ts); the admin session is never recorded.
+    "CLARITY_PROJECT_ID": "zd3nk2mo1n"
+  },
+  // Cloudflare Browser Rendering (Workers Paid): prints the daily marketing report to PDF (src/lib/marketing/reportPdf.ts).
+  "browser": { "binding": "BROWSER" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "jentis-db-prod",
+      "database_id": "2361ddea-66d9-42ba-80fe-f2ab62991765",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // ---------------- Preview (testing) ----------------
+  "env": {
+    "preview": {
+      // Deployed as Worker "jentis-kitchen-preview" on a *.workers.dev URL, protected by its own Access application.
+      "workers_dev": true,
+      "preview_urls": false,
+      "vars": {
+        "CF_ACCESS_TEAM_DOMAIN": "green-sun-6a16.cloudflareaccess.com",
+        "CF_ACCESS_AUD": "bce09e0e089bec93eab6d2e98c161317f789d5b65d17626882c40edb2b2c5560",
+        // No public shop host on preview: the shop is tested at <preview url>/shop, behind Access.
+        "DOKU_ENV": "sandbox",
+        "DUITKU_ENV": "sandbox",
+        "PAYMENT_GATEWAY": "duitku",
+        "SHOP_HOSTS": "",
+        "SHOP_URL": "https://jentis-kitchen-preview.jentis-kitchen.workers.dev/shop",
+        "ADMIN_URL": "https://jentis-kitchen-preview.jentis-kitchen.workers.dev",
+        "EMAIL_FROM": "Jentis Kitchen <order@jentiskitchen.id>"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "jentis-db-preview",
+          "database_id": "87e4454a-813a-4486-8314-d327fe527ee0",
+          "migrations_dir": "migrations"
+        }
+      ]
+    }
+  }
+}

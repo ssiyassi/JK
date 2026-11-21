@@ -1,0 +1,44 @@
+{
+  "summary": "First week of Meta ads (they started Tue 20 Oct). The first four days spent Rp 183.519 with no orders — people added to cart but dropped at checkout (the 35% wasn't applied for guests and the ads still asked to register). After the checkout and homepage fixes, Sat–Sun brought 3 paid orders (Rp 1.080.000). The week ends ABOVE break-even: +Rp 170.842 profit after ads, ROAS 2,86×, Rp 125.849 ad cost per order. (Monday 26 Oct added 2 more orders — they'll be in next week's recap.)",
+  "worked": [
+    "Fixing the funnel worked: guest checkout with the 35% applied automatically + \"tanpa perlu daftar\" ads + homepage banners → 0 orders before, 3 orders on Saturday–Sunday (and 2 more on Monday).",
+    "\"Carousel 4 kartu v2\" (taste story ending with the 35% ticket) is the winner: 68% of the spend and both orders with an ad tag. Meta now sends most budget there by itself.",
+    "Customers buy more than one pack: average order Rp 360.000 (2–4 packs), so they get free delivery and the margin stays healthy.",
+    "Tracking works end to end: Pixel + server purchases, ad source on each order, visits per source, courier fee in the profit."
+  ],
+  "improve": [
+    "Don't change the campaign this week: Meta just started learning from real purchases (3 credited so far). Changes now would reset that learning.",
+    "Discounted Sapi-only first orders are thin (Monday's order #261020260002: Rp 41.445 before ads, below the ad cost per order). Watch whether these customers order again before changing anything.",
+    "Many buyers come back without an ad tag (27 \"direct\" visits, 4 opened checkout) — e.g. after a WhatsApp chat. It works, but it hides which ad brought them; when chatting, sending the website link keeps the tag.",
+    "Keep entering the courier fee for every order — the profit depends on it."
+  ],
+  "experiments": [
+    {
+      "title": "Second carousel: \"Cara masak 3 langkah\" next to the winning carousel",
+      "why": "How-to posts get saved and shared; a second strong carousel can lower the cost per order and protects us if the current winner gets tired (same people seeing it again).",
+      "how": "Add the ready-made 5-slide carousel as a new ad in the SAME ad set. Meta splits the same Rp 70.000/day between them.",
+      "cost": "No extra budget.",
+      "measure": "After 7 days and at least Rp 150.000 spend on the new ad: cost per paid order vs Carousel v2. Keep the cheaper one."
+    },
+    {
+      "title": "Re-order reminder on WhatsApp (no new promotion)",
+      "why": "Profit comes from the second order (no ad cost, no 35%). The first 5 customers will run out in 1–2 weeks.",
+      "how": "10–14 days after delivery, you send a short WhatsApp: \"Stok daging di freezer masih ada? Kalau mau pesan lagi: jentiskitchen.id\" + mention their monthly 20% voucher (existing). I prepare the message and the list of customers each week.",
+      "cost": "Rp 0, about 5 minutes per week.",
+      "measure": "How many of these customers order again within 3 weeks."
+    },
+    {
+      "title": "Retargeting: remind people who added to cart but didn't buy (from next week)",
+      "why": "18 add-to-carts but only 3 orders this week — many interested people left.",
+      "how": "Small separate ad set (Rp 15.000/day) shown only to website visitors of the last 14 days who didn't buy. To keep the Rp 500.000/week limit, the main ad set goes from Rp 70.000 to Rp 55.000/day.",
+      "cost": "Same total budget (split differently). Needs about 100+ visitors in the audience first — we're close.",
+      "measure": "Orders and cost per order from the retargeting ad set over 7 days."
+    }
+  ],
+  "decisions": [
+    "Experiment 1 (second carousel, no extra cost): OK to add it?",
+    "Experiment 2 (WhatsApp re-order reminder, Rp 0): OK — should I prepare the message and customer list each Monday?",
+    "Experiment 3 (retargeting, same total budget): start it next Monday if the audience is big enough?",
+    "Budget: at this pace the Rp 2.000.000 test budget lasts until about mid-November. No decision needed yet — I'll ask again at 80%."
+  ]
+}

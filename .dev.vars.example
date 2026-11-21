@@ -1,0 +1,15 @@
+# Copy to .dev.vars for local development only. .dev.vars is git-ignored and never deployed.
+ALLOW_LOCAL_WITHOUT_ACCESS=true
+# Online shop (put SHOP_HOSTS in .env.local too: under `next dev` the middleware reads .env.local).
+# Open http://shop.localhost:3001 for the shop as customers see it (http://localhost:3001 = admin).
+SHOP_HOSTS=shop.localhost
+SHOP_URL=http://shop.localhost:3001
+ADMIN_URL=http://localhost:3001
+# Without RESEND_API_KEY, emails are only written to the terminal log.
+OWNER_EMAIL=owner@example.test
+
+# Duitku (sandbox.duitku.com project). PAYMENT_GATEWAY picks doku or duitku when both are set.
+DUITKU_ENV=sandbox
+DUITKU_MERCHANT_CODE=
+DUITKU_API_KEY=
+PAYMENT_GATEWAY=duitku

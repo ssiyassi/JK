@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Admin look (admin.jentiskitchen.id). Class names start with "a-" so the shop is never affected. ---------- */
+@layer components {
+  .a-app { background: #f6f5f2; color: #18181b; min-height: 100vh; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .a-card { background: #fff; border: 1px solid #ebe8e3; border-radius: 14px; box-shadow: 0 1px 2px rgba(24,24,27,.04), 0 2px 8px rgba(24,24,27,.04); }
+  .a-chead { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid #f3f1ed; font-weight: 700; font-size: 15px; }
+  .a-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 40px; padding: 0 14px; border-radius: 10px; font-weight: 600; font-size: 13.5px; border: 1px solid #ebe8e3; background: #fff; color: #18181b; white-space: nowrap; transition: background .15s, opacity .15s; }
+  .a-btn:hover { background: #faf9f6; }
+  .a-btn:disabled { opacity: .45; cursor: not-allowed; }
+  .a-btn-sm { height: 36px; padding: 0 11px; font-size: 13px; border-radius: 9px; }
+  .a-btn-lg { height: 48px; font-size: 15px; border-radius: 12px; padding: 0 18px; }
+  .a-btn-pri { background: #9a3412; border-color: #9a3412; color: #fff; } .a-btn-pri:hover { background: #7c2d12; }
+  .a-btn-blue { background: #1d4ed8; border-color: #1d4ed8; color: #fff; } .a-btn-blue:hover { background: #1e40af; }
+  .a-btn-green { background: #15803d; border-color: #15803d; color: #fff; } .a-btn-green:hover { background: #166534; }
+  .a-btn-wa { background: #16a34a; border-color: #16a34a; color: #fff; } .a-btn-wa:hover { background: #15803d; }
+  .a-btn-danger { color: #b91c1c; border-color: #fecaca; } .a-btn-danger:hover { background: #fef2f2; }
+  .a-btn-danger-fill { background: #b91c1c; border-color: #b91c1c; color: #fff; } .a-btn-danger-fill:hover { background: #991b1b; }
+  .a-btn-ghost { border-color: transparent; background: transparent; color: #52525b; }
+  .a-chip { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border-radius: 999px; border: 1px solid #ebe8e3; background: #fff; font-weight: 600; font-size: 13px; color: #52525b; white-space: nowrap; }
+  .a-chip-on { background: #18181b; border-color: #18181b; color: #fff; }
+  .a-chip .a-c { font-size: 11.5px; background: #f3f1ed; color: #52525b; border-radius: 999px; padding: 0 6px; }
+  .a-chip-on .a-c { background: rgba(255,255,255,.18); color: #fff; }
+  .a-pill { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 999px; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+  .a-input { width: 100%; height: 44px; border: 1px solid #ebe8e3; border-radius: 10px; background: #fff; padding: 0 12px; font-size: 14px; color: #18181b; }
+  .a-input:focus { outline: none; border-color: #9a3412; box-shadow: 0 0 0 3px #f6dcc4; }
+  textarea.a-input { height: auto; padding-top: 10px; padding-bottom: 10px; }
+  .a-label { display: block; font-size: 12.5px; font-weight: 600; color: #52525b; margin-bottom: 6px; }
+  .a-hint { font-size: 11.5px; color: #a1a1aa; margin-top: 5px; }
+  .a-k { font-size: 11.5px; color: #a1a1aa; }
+  .a-tabs { display: flex; gap: 22px; border-bottom: 1px solid #ebe8e3; margin-bottom: 18px; overflow-x: auto; scrollbar-width: none; }
+  .a-tabs::-webkit-scrollbar { display: none; }
+  .a-tabs a { padding: 10px 0; font-weight: 600; color: #52525b; font-size: 13.5px; white-space: nowrap; }
+  .a-tabs a.a-on { color: #18181b; box-shadow: inset 0 -2px 0 #9a3412; }
+  .a-scrollx { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .a-scrollx::-webkit-scrollbar { display: none; }
+  .a-th { text-align: left; font-size: 11.5px; font-weight: 600; color: #a1a1aa; text-transform: uppercase; letter-spacing: .04em; padding: 10px 12px; border-bottom: 1px solid #ebe8e3; background: #fcfbf9; white-space: nowrap; }
+  .a-td { padding: 12px; border-bottom: 1px solid #f3f1ed; vertical-align: middle; }
+  .a-row-link { cursor: pointer; } .a-row-link:hover .a-td { background: #fcfbf9; }
+  .a-plab { display: flex; align-items: center; justify-content: space-between; gap: 6px; color: #fff; font-size: 12.5px; font-weight: 600; border-radius: 8px; padding: 5px 9px; white-space: nowrap; }
+  .a-plab b { font-size: 14px; }
+  .a-plab-zero { opacity: .28; }
+  .a-toggle { width: 40px; height: 24px; border-radius: 999px; background: #d4d4d8; position: relative; flex: none; display: inline-block; transition: background .15s; }
+  .a-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left .15s; }
+  .a-toggle-on { background: #15803d; } .a-toggle-on::after { left: 19px; }
+}
+/* Admin grids never grow wider than the screen because of a long word or a form field. */
+.a-app main .grid > * { min-width: 0; }
